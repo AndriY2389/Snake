@@ -20,7 +20,6 @@ public class MainWindow extends JFrame {
 
     private void playMusic() {
         new Thread(new MusicPlayer("Shadilay.wav")).start();
-
     }
 
     public static void main(String[] args) {

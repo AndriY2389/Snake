@@ -2,16 +2,19 @@ package main.java.ua.verkholiak.andrii;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Random;
 
 class GameField extends JPanel implements ActionListener {
 
     private static final int FIELD_SIZE = 320;
-    private static final int MAX_SNAKE_LENGTH = 100;
+    private static final int MAX_SNAKE_LENGTH = 50;
 
     private int delay = 200;
-    private boolean gameRunning = true;
+    private boolean gameRunning;
 
     private Snake snake;
     private Segment apple;
@@ -29,12 +32,22 @@ class GameField extends JPanel implements ActionListener {
     }
 
     private void initGame() {
+        gameRunning = true;
         snake = new Snake(new Segment(48, 48));
         walls = new Wall(FIELD_SIZE);
         placeAppleRandomly();
 
         timer = new Timer(delay, this);
         timer.start();
+    }
+
+    private void restartGame() {
+        gameRunning = true;
+        delay = 200;
+        snake = new Snake(new Segment(48, 48));
+        walls = new Wall(FIELD_SIZE);
+        placeAppleRandomly();
+        timer.setDelay(delay);
     }
 
     private void placeAppleRandomly() {
@@ -85,13 +98,17 @@ class GameField extends JPanel implements ActionListener {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if (gameRunning) {
+        if (snake.getSegments().size() > MAX_SNAKE_LENGTH && gameRunning) {
+            g.setColor(Color.white);
+            g.drawString("You Win!!!", 125, (FIELD_SIZE / 2));
+        } else if (gameRunning) {
             paintWalls(g);
             paintApple(g);
             paintSnake(g);
         } else {
             g.setColor(Color.white);
-            g.drawString("Game Over", 125, (FIELD_SIZE / 2));
+            g.drawString("You Lost", 125, (FIELD_SIZE / 2));
+            restartGame();
         }
     }
 
