@@ -47,6 +47,36 @@ class Snake {
         }
     }
 
+    void reverse() {
+        invertSegments();
+        setReverseDirection();
+    }
+
+    private void invertSegments() {
+        Segment tempSegment;
+        for (int i = 0, j = segments.size() - 1; i < j; i++, j--) {
+            tempSegment = segments.get(i);
+            segments.set(i, segments.get(j));
+            segments.set(j, tempSegment);
+        }
+    }
+
+    private void setReverseDirection() {
+        if (segments.get(0).getX() == segments.get(1).getX()) {
+            if (segments.get(0).getY() > segments.get(1).getY()) {
+                direction = Direction.DOWN;
+            } else {
+                direction = Direction.UP;
+            }
+        } else {
+            if (segments.get(0).getX() > segments.get(1).getX()) {
+                direction = Direction.RIGHT;
+            } else {
+                direction = Direction.LEFT;
+            }
+        }
+    }
+
     private boolean checkDirection(Direction direction) {
         return !segments.contains(getFutureSegment(direction));
     }

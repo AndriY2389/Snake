@@ -101,6 +101,7 @@ class GameField extends JPanel implements ActionListener {
         if (snake.getSegments().size() > MAX_SNAKE_LENGTH && gameRunning) {
             g.setColor(Color.white);
             g.drawString("You Win!!!", 125, (FIELD_SIZE / 2));
+            timer.stop();
         } else if (gameRunning) {
             paintWalls(g);
             paintApple(g);
@@ -144,6 +145,10 @@ class GameField extends JPanel implements ActionListener {
 
             if (pressedKey == KeyEvent.VK_DOWN) {
                 snake.setDirection(Direction.DOWN);
+            }
+
+            if (pressedKey == KeyEvent.VK_SPACE) {
+                snake.reverse();
             }
         }
     }
