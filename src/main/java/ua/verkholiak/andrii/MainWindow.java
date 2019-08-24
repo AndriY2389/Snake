@@ -12,7 +12,7 @@ public class MainWindow extends JFrame {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
         setResizable(false);
-        setLocation(400, 400);
+        setLocation(400, 200);
         add(new GameField());
         setVisible(true);
         playMusic();
